@@ -1,12 +1,30 @@
 const path = require('path');
 
-
-
 module.exports = {
   mode: 'production',
-  entry: path.resolve(__dirname, './js/dashboard_main.js'),
+  entry: './js/dashboard_main.js',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'),
+    path:path.resolve(__dirname, 'public'),
+    filename: 'bundle.js'
   },
-};
+  performance: {
+    maxAssetSize: 1000000,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        use: [
+          {loader: 'image-webpack-loader'} //["file-loader"]
+        ]
+      }
+    ]
+  }
+}
