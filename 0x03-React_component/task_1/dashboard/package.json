@@ -45,6 +45,9 @@
     "moduleNameMapper": {
       "\\.(css)$": "<rootDir>/__mocks__/styleMock.js",
       "\\.(jpg|png)$": "<rootDir>/__mocks__/fileMock.js"
-    }
+    },
+    "transform": {
+      "\\.js$": "<rootDir>/node_modules/babel-jest"
+      }
   }
 }
