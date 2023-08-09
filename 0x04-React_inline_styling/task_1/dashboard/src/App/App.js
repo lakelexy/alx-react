@@ -79,8 +79,17 @@ const styles = StyleSheet.create({
     maxWidth: '100vw',
     position: 'relative',
     fontFamily: 'Arial, Helvetica, sans-serif'
+  },
+  footerstyl: {
+    borderTop: '3px solid red',
+    width: '100%',
+    position: 'fixed',
+    bottom: '0',
+    fontStyle: 'italic',
+    textAlign: 'center',
   }
-  
+
+
 })
 
 App.defaultProps = {
