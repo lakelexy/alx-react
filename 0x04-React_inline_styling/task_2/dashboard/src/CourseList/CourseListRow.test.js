@@ -1,25 +1,37 @@
-import React from 'react';
-import CourseListRow from './CourseListRow';
-import { shallow } from 'enzyme';
+import React from "react";
+import Adapter from "enzyme-adapter-react-16";
+import { shallow, configure } from "enzyme";
+import { render } from "@testing-library/react";
+import CourseListRow from "./CourseListRow";
+import { StyleSheetTestUtils } from "aphrodite/no-important";
+// Suppress style injections during testing
+StyleSheetTestUtils.suppressStyleInjection();
 
-describe('Course list Row Component test', () => {
-    it ('renders without crashing', () => {
-        const wrapper = shallow(<CourseListRow textFirstCell='test' />);
-        expect(wrapper.exists()).toBe(true); 
-    });
+configure({ adapter: new Adapter() });
 
-    it ('should render one cell with colspan 2 when textsecondcell id null', () => {
-        const wrapper = shallow(<CourseListRow isHeader={true} textFirstCell="test" textSecondCell={null} />)
-        expect(wrapper.find("tr").children()).toHaveLength(1);
-        expect(wrapper.find("tr").childAt(0).html()).toEqual('<th colSpan="2>tests<?th>');
+describe("CourseListRow Component", () => {
+  it("should render a header row with correct inline styles", () => {
+    const props = {
+      isHeader: true,
+      textFirstCell: "Available courses",
+    };
+    const { container } = render(<CourseListRow {...props} />);
 
-    });
+    // Test for the presence of Aphrodite class names
+    expect(container.querySelector(".headerRow")).toBeInTheDocument();
+    expect(container.querySelector(".cell")).toBeInTheDocument();
+  });
 
-    it ('renders two cells when textSecondCell is present', () => {
-        const wrapper = shallow(<CourseListRow isHeader={false} textFirstCell="test" textSecondCell="test" />);
-        expect(wrapper.find('tr').children()).toHaveLength(2);
-        expect(wrapper.find("tr").childAt(0).html()).toEqual("<td>test</td>");
-        expect(wrapper.find("tr").childAt(1).html()).toEqual("<td>test</td>");
+  it("should render a regular row with correct inline styles", () => {
+    const props = {
+      isHeader: false,
+      textFirstCell: "ES6",
+      textSecondCell: "60",
+    };
+    const { container } = render(<CourseListRow {...props} />);
 
-    })
-})
+    // Test for the presence of Aphrodite class names
+    expect(container.querySelector(".defaultRow")).toBeInTheDocument();
+    expect(container.querySelectorAll(".cell")).toHaveLength(2); // Two cells in a regular row
+  });
+});
