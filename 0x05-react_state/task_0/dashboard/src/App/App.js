@@ -6,9 +6,9 @@ import CourseList from "../CourseList/CourseList";
 import Notifications from "../Notifications/Notifications";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
 import BodySection from "../BodySection/BodySection";
-import { StyleSheet, css } from "aphrodite";
 import PropTypes from "prop-types";
 import { getLatestNotification } from "../utils/utils";
+import { StyleSheet, css } from 'aphrodite';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +19,26 @@ class App extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
+    
+
   }
+   // Function to set displayDrawer to true
+
+  handleDisplayDrawer =  () => {
+
+    this.setState = {
+      displayDrawer: true,
+    }
+
+  }
+  // Function to set displayDrawer to false
+  handleHideDrawer = () => {
+    this.setState = {
+      displayDrawer: false,
+    }
+  }
+
+
 
   listCourses = [
     { id: 1, name: "ES6", credit: 60 },
@@ -35,20 +54,10 @@ class App extends React.Component {
 
   handleKeyPress(e) {
     if (e.ctrlKey && e.key === "h") {
-      e.preventDefault();
       alert("Logging you out");
       this.props.logOut();
     }
   }
-
-  handleDisplayDrawer() {
-    this.setState({ displayDrawer: true });
-  }
-
-  handleHideDrawer() {
-    this.setState({ displayDrawer: false });
-  }
-
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
   }
@@ -60,13 +69,12 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className={css(styles.App)}>
+        <div className={css(styles.app)}>
           <div className="heading-section">
-            <Notifications
-              listNotifications={this.listNotifications}
-              displayDrawer={this.state.displayDrawer}
-              handleDisplayDrawer={this.handleDisplayDrawer}
-              handleHideDrawer={this.handleHideDrawer}
+            <Notifications listNotifications={this.listNotifications} 
+            displayDrawer={this.state.displayDrawer}
+            handleDisplayDrawer={this.handleDisplayDrawer}
+            handleHideDrawer={this.handleHideDrawer} 
             />
             <Header />
           </div>
@@ -85,7 +93,7 @@ class App extends React.Component {
               iste vero dolor voluptates.
             </p>
           </BodySection>
-          <Footer />
+          <Footer className={css(styles.footerstyl)} />
         </div>
       </React.Fragment>
     );
@@ -93,13 +101,23 @@ class App extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  App: {
-    height: "100vh",
-    maxWidth: "100vw",
-    position: "relative",
-    fontFamily: "Arial, Helvetica, sans-serif",
+  app: {
+    height: '100vh',
+    maxWidth: '100vw',
+    position: 'relative',
+    fontFamily: 'Arial, Helvetica, sans-serif'
   },
-});
+  footerstyl: {
+    borderTop: '3px solid red',
+    width: '100%',
+    position: 'fixed',
+    bottom: '0',
+    fontStyle: 'italic',
+    textAlign: 'center',
+  }
+
+  
+})
 
 App.defaultProps = {
   isLoggedIn: false,
